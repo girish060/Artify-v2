@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Artify - Complete Art Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .hidden {
+      display: none !important;
+    }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .artwork-card {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .artwork-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+    
+    .hero-gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    }
+    
+    .floating-animation {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    .text-gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section {
+      display: none;
+    }
+    
+    .section.active {
+      display: block;
+    }
+
+    .nav-link.active {
+      color: #4f46e5 !important;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <!-- Navigation Header -->
+  <header class="fixed w-full top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo -->
+        <div class="flex items-center">
+          <div class="text-2xl font-bold text-gradient">Artify</div>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex space-x-8">
+          <a href="#" class="nav-link text-gray-700 hover:text-indigo-600 transition-colors" data-section="home">Home</a>
+          <a href="#" class="nav-link text-gray-700 hover:text-indigo-600 transition-colors" data-section="artworks">Artworks</a>
+          <a href="#" class="nav-link text-gray-700 hover:text-indigo-600 transition-colors" data-section="creator">Upload</a>
+          <a href="#" class="nav-link text-gray-700 hover:text-indigo-600 transition-colors" data-section="trending">Trending</a>
+        </nav>
+
+        <!-- Right side buttons -->
+        <div class="flex items-center space-x-4">
+          <!-- Search -->
+          <div class="hidden md:block relative">
+            <input id="searchInput" type="text" placeholder="Search artworks..." 
+                   class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+          </div>
+
+          <!-- Cart Button -->
+          <button id="cartBtn" class="relative p-2 text-gray-700 hover:text-indigo-600 transition-colors">
+            <i class="fas fa-shopping-cart text-xl"></i>
+            <span id="cartCount" class="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center cart-count hidden">0</span>
+          </button>
+
+          <!-- User Menu -->
+          <div class="relative">
+            <button id="userBtn" class="flex items-center space-x-2 text-gray-700 hover:text-indigo-600 transition-colors">
+              <i class="fas fa-user-circle text-xl"></i>
+              <span id="userDisplay" class="hidden md:block">Sign In</span>
+              <i class="fas fa-chevron-down text-sm"></i>
+            </button>
+            
+            <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 hidden">
+              <div class="py-2">
+                <div id="userMenu" class="hidden">
+                  <div class="px-4 py-2 text-sm text-gray-700 border-b border-gray-100">
+                    <div class="font-medium" id="userName"></div>
+                  </div>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Orders</a>
+                  <button id="logoutBtn" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                </div>
+                <div id="guestMenu">
+                  <button id="loginLink" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-section="login">Sign In</button>
+                  <button id="signupLink" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-section="login">Sign Up</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <button id="mobileMenuBtn" class="md:hidden p-2 text-gray-700">
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="md:hidden bg-white border-t border-gray-200 hidden">
+      <div class="px-4 py-3 space-y-3">
+        <a href="#" class="nav-link block text-gray-700 hover:text-indigo-600" data-section="home">Home</a>
+        <a href="#" class="nav-link block text-gray-700 hover:text-indigo-600" data-section="artworks">Artworks</a>
+        <a href="#" class="nav-link block text-gray-700 hover:text-indigo-600" data-section="creator">Upload</a>
+        <a href="#" class="nav-link block text-gray-700 hover:text-indigo-600" data-section="trending">Trending</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="pt-16">
+    <!-- HOME SECTION -->
+    <section id="home" class="section active">
+      <!-- Hero Section -->
+      <section class="hero-gradient min-h-screen flex items-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="text-white" data-aos="fade-right">
+              <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                Where <span class="text-yellow-300">Creativity</span><br/>
+                Lives & Thrives
+              </h1>
+              <p class="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed">
+                Discover, collect, and showcase extraordinary digital art from talented creators worldwide. Join our vibrant community of artists and art lovers.
+              </p>
+              <div class="flex flex-col sm:flex-row gap-4">
+                <button class="px-8 py-4 bg-white text-indigo-600 rounded-full font-semibold hover:bg-gray-100 transition-all transform hover:scale-105" data-section="artworks">
+                  <i class="fas fa-palette mr-2"></i>
+                  Explore Art
+                </button>
+                <button class="px-8 py-4 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-indigo-600 transition-all" data-section="creator">
+                  <i class="fas fa-upload mr-2"></i>
+                  Upload Art
+                </button>
+              </div>
+            </div>
+            <div class="floating-animation" data-aos="fade-left">
+              <div class="relative">
+                <div class="w-80 h-80 bg-white/20 rounded-full absolute top-10 left-10 glass-effect"></div>
+                <div class="w-64 h-64 bg-yellow-300/30 rounded-full absolute top-20 right-0"></div>
+                <img src="https://img.freepik.com/free-vector/artist-painting-concept-illustration_114360-4956.jpg" 
+                     alt="Artist" class="relative z-10 w-full max-w-md mx-auto rounded-2xl shadow-2xl">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats Section -->
+      <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div data-aos="fade-up" data-aos-delay="0">
+              <div class="text-3xl md:text-4xl font-bold text-indigo-600 mb-2">New Platform</div>
+              <div class="text-gray-600">Fresh Start</div>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="100">
+              <div class="text-3xl md:text-4xl font-bold text-indigo-600 mb-2">Creative Community</div>
+              <div class="text-gray-600">Growing Fast</div>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="200">
+              <div class="text-3xl md:text-4xl font-bold text-indigo-600 mb-2">Secure Transactions</div>
+              <div class="text-gray-600">Safe & Trusted</div>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="300">
+              <div class="text-3xl md:text-4xl font-bold text-indigo-600 mb-2">Global Reach</div>
+              <div class="text-gray-600">Worldwide</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Artworks -->
+      <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Featured <span class="text-gradient">Artworks</span></h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Discover exceptional digital art pieces from our talented community of creators</p>
+          </div>
+
+          <!-- Demo Notice -->
+          <div class="bg-orange-50 border border-orange-200 rounded-lg px-4 py-3 max-w-2xl mx-auto mt-6">
+            <p class="text-orange-800 text-sm text-center">
+              <i class="fas fa-info-circle mr-2"></i>
+              <strong>Demo Content:</strong> The artworks below are for demonstration purposes to showcase platform features.
+            </p>
+          </div>
+
+          <!-- Filter Buttons -->
+          <div class="flex flex-wrap justify-center gap-4 mb-12" data-aos="fade-up" data-aos-delay="100">
+            <button class="filter-btn px-6 py-3 rounded-full bg-indigo-600 text-white font-medium transition-all hover:bg-indigo-700 active" data-filter="all">
+              All Categories
+            </button>
+            <button class="filter-btn px-6 py-3 rounded-full bg-white text-gray-700 border border-gray-200 font-medium transition-all hover:bg-gray-50" data-filter="digital">
+              Digital Art
+            </button>
+            <button class="filter-btn px-6 py-3 rounded-full bg-white text-gray-700 border border-gray-200 font-medium transition-all hover:bg-gray-50" data-filter="traditional">
+              Traditional
+            </button>
+          </div>
+
+          <!-- Demo Artworks Grid -->
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Demo Artwork Card 1 -->
+            <div class="artwork-card bg-white rounded-2xl shadow-lg overflow-hidden" data-category="traditional" data-aos="zoom-in">
+              <div class="relative overflow-hidden group">
+                <img class="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                     src="https://img.freepik.com/free-photo/black-swan-cygnus-atratus-illustrated-by-elizabeth-gould_53876-65218.jpg" 
+                     alt="Black Swan">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <button class="p-2 bg-white/90 rounded-full text-red-500 hover:text-red-600 transition-colors">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                </div>
+                <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span class="px-3 py-1 bg-orange-600 text-white text-xs rounded-full font-medium">DEMO</span>
+                </div>
+              </div>
+              <div class="p-6">
+                <div class="flex justify-between items-start mb-2">
+                  <h3 class="text-lg font-bold text-gray-900">Black Swan</h3>
+                  <span class="text-sm text-gray-500">Demo Artist</span>
+                </div>
+                <p class="text-gray-600 text-sm mb-4">Beautiful traditional illustration showing platform capabilities.</p>
+                <div class="flex justify-between items-center">
+                  <span class="text-xl font-bold text-indigo-600">₹2,500</span>
+                  <div class="flex space-x-2">
+                    <button class="add-to-cart-btn px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
+                            data-title="Black Swan" data-image="https://img.freepik.com/free-photo/black-swan-cygnus-atratus-illustrated-by-elizabeth-gould_53876-65218.jpg" data-price="2500">
+                      <i class="fas fa-shopping-cart mr-1"></i>
+                      Cart
+                    </button>
+                    <button class="px-3 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm font-medium" data-section="payment">
+                      View
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Demo Artwork Card 2 -->
+            <div class="artwork-card bg-white rounded-2xl shadow-lg overflow-hidden" data-category="traditional" data-aos="zoom-in" data-aos-delay="100">
+              <div class="relative overflow-hidden group">
+                <img class="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                     src="https://img.freepik.com/premium-vector/warli-art-tranquil-rural-life-scene-indian-tribal-art-village-lifestyle-traditional-wall-decor_770404-218.jpg" 
+                     alt="Warli Heritage">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <button class="p-2 bg-white/90 rounded-full text-red-500 hover:text-red-600 transition-colors">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                </div>
+                <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span class="px-3 py-1 bg-orange-600 text-white text-xs rounded-full font-medium">DEMO</span>
+                </div>
+              </div>
+              <div class="p-6">
+                <div class="flex justify-between items-start mb-2">
+                  <h3 class="text-lg font-bold text-gray-900">Warli Heritage</h3>
+                  <span class="text-sm text-gray-500">Demo Artist</span>
+                </div>
+                <p class="text-gray-600 text-sm mb-4">Traditional Indian art style for demonstration purposes.</p>
+                <div class="flex justify-between items-center">
+                  <span class="text-xl font-bold text-indigo-600">₹3,200</span>
+                  <div class="flex space-x-2">
+                    <button class="add-to-cart-btn px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
+                            data-title="Warli Heritage" data-image="https://img.freepik.com/premium-vector/warli-art-tranquil-rural-life-scene-indian-tribal-art-village-lifestyle-traditional-wall-decor_770404-218.jpg" data-price="3200">
+                      <i class="fas fa-shopping-cart mr-1"></i>
+                      Cart
+                    </button>
+                    <button class="px-3 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm font-medium" data-section="payment">
+                      View
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Demo Artwork Card 3 -->
+            <div class="artwork-card bg-white rounded-2xl shadow-lg overflow-hidden" data-category="digital" data-aos="zoom-in" data-aos-delay="200">
+              <div class="relative overflow-hidden group">
+                <img class="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                     src="https://img.freepik.com/free-photo/view-ancient-egyptian-civilization-culture_23-2151735517.jpg" 
+                     alt="Ancient Wonders">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <button class="p-2 bg-white/90 rounded-full text-red-500 hover:text-red-600 transition-colors">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                </div>
+                <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span class="px-3 py-1 bg-orange-600 text-white text-xs rounded-full font-medium">DEMO</span>
+                </div>
+              </div>
+              <div class="p-6">
+                <div class="flex justify-between items-start mb-2">
+                  <h3 class="text-lg font-bold text-gray-900">Ancient Wonders</h3>
+                  <span class="text-sm text-gray-500">Demo Artist</span>
+                </div>
+                <p class="text-gray-600 text-sm mb-4">Digital art showcasing historical themes and culture.</p>
+                <div class="flex justify-between items-center">
+                  <span class="text-xl font-bold text-indigo-600">₹4,800</span>
+                  <div class="flex space-x-2">
+                    <button class="add-to-cart-btn px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
+                            data-title="Ancient Wonders" data-image="https://img.freepik.com/free-photo/view-ancient-egyptian-civilization-culture_23-2151735517.jpg" data-price="4800">
+                      <i class="fas fa-shopping-cart mr-1"></i>
+                      Cart
+                    </button>
+                    <button class="px-3 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm font-medium" data-section="payment">
+                      View
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Demo Artwork Card 4 -->
+            <div class="artwork-card bg-white rounded-2xl shadow-lg overflow-hidden" data-category="digital" data-aos="zoom-in" data-aos-delay="300">
+              <div class="relative overflow-hidden group">
+                <img class="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                     src="https://img.freepik.com/free-vector/san-francisco-bridge-concept-illustration_114360-9882.jpg" 
+                     alt="Golden Gate Dreams">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <button class="p-2 bg-white/90 rounded-full text-red-500 hover:text-red-600 transition-colors">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                </div>
+                <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span class="px-3 py-1 bg-orange-600 text-white text-xs rounded-full font-medium">DEMO</span>
+                </div>
+              </div>
+              <div class="p-6">
+                <div class="flex justify-between items-start mb-2">
+                  <h3 class="text-lg font-bold text-gray-900">Golden Gate Dreams</h3>
+                  <span class="text-sm text-gray-500">Demo Artist</span>
+                </div>
+                <p class="text-gray-600 text-sm mb-4">Vector illustration demonstrating digital art capabilities.</p>
+                <div class="flex justify-between items-center">
+                  <span class="text-xl font-bold text-indigo-600">₹3,600</span>
+                  <div class="flex space-x-2">
+                    <button class="add-to-cart-btn px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
+                            data-title="Golden Gate Dreams" data-image="https://img.freepik.com/free-vector/san-francisco-bridge-concept-illustration_114360-9882.jpg" data-price="3600">
+                      <i class="fas fa-shopping-cart mr-1"></i>
+                      Cart
+                    </button>
+                    <button class="px-3 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm font-medium" data-section="payment">
+                      View
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- View More Button -->
+          <div class="text-center mt-12" data-aos="fade-up">
+            <button class="px-8 py-4 bg-indigo-600 text-white rounded-full font-semibold hover:bg-indigo-700 transition-all transform hover:scale-105" data-section="artworks">
+              <i class="fas fa-arrow-right mr-2"></i>
+              View All Artworks
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16" data-aos="fade-up">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Why Choose <span class="text-gradient">Artify?</span></h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Experience the future of digital art marketplace with cutting-edge features</p>
+          </div>
+
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-100" data-aos="fade-up" data-aos-delay="0">
+              <div class="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-shield-alt text-2xl text-white"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-900 mb-4">Secure Transactions</h3>
+              <p class="text-gray-600">Advanced encryption and blockchain technology ensure your transactions are safe and transparent.</p>
+            </div>
+
+            <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-green-50 to-teal-50 border border-green-100" data-aos="fade-up" data-aos-delay="100">
+              <div class="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-users text-2xl text-white"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-900 mb-4">Global Community</h3>
+              <p class="text-gray-600">Connect with artists and collectors from around the world in our vibrant creative ecosystem.</p>
+            </div>
+
+            <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-yellow-50 to-orange-50 border border-yellow-100" data-aos="fade-up" data-aos-delay="200">
+              <div class="w-16 h-16 bg-yellow-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-rocket text-2xl text-white"></i>
+              </div>
+              <h3 class="text-xl font-bold text-gray-900 mb-4">Easy Upload</h3>
+              <p class="text-gray-600">Share your masterpieces with the world through our intuitive and user-friendly upload system.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ARTWORKS SECTION -->
+    <section id="artworks" class="section">
+      <div class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Art <span class="text-gradient">Collection</span></h1>
+            <p class="text-xl text-gray-600">Discover amazing artworks from talented creators</p>
+          </div>
+          
+          <!-- Demo Notice -->
+          <div class="bg-orange-50 border border-orange-200 rounded-lg px-6 py-4 mb-8">
+            <div class="flex items-center justify-center">
+              <i class="fas fa-info-circle text-orange-600 mr-3"></i>
+              <p class="text-orange-800">
+                <strong>Demo Content:</strong> All artworks shown are for demonstration purposes. You can test the shopping cart, wishlist, and payment features with these sample items.
+              </p>
+            </div>
+          </div>
+
+          <!-- Filters and Sort -->
+          <div class="flex flex-wrap justify-between items-center mb-8">
+            <div class="flex flex-wrap gap-4 mb-4">
+              <button class="filter-btn px-4 py-2 bg-indigo-600 text-white rounded-lg" data-filter="all">All</button>
+              <button class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg" data-filter="digital">Digital</button>
+              <button class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg" data-filter="traditional">Traditional</button>
+            </div>
+            <select id="sortSelect" class="px-4 py-2 border border-gray-300 rounded-lg">
+              <option value="newest">Newest First</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="popular">Most Popular</option>
+            </select>
+          </div>
+
+          <!-- Artworks Grid -->
+          <div id="artworksGrid" class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOGIN SECTION -->
+    <section id="login" class="section">
+      <div class="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex">
+        <div class="flex-1 flex items-center justify-center p-8">
+          <div class="max-w-md w-full">
+            <div class="text-center mb-8">
+              <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
+              <p class="text-gray-600">Sign in to your account or create a new one</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+              <div class="flex mb-6">
+                <button id="loginTab" class="flex-1 py-2 text-center font-semibold text-indigo-600 border-b-2 border-indigo-600">Sign In</button>
+                <button id="signupTab" class="flex-1 py-2 text-center font-semibold text-gray-400 border-b-2 border-transparent">Sign Up</button>
+              </div>
+              
+              <form id="authForm">
+                <div id="signupFields" class="hidden">
+                  <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                    <input type="text" id="fullName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                  </div>
+                </div>
+                
+                <div class="mb-4">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                  <input type="email" id="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                </div>
+                
+                <div class="mb-6">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                  <div class="relative">
+                    <input type="password" id="password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent pr-12">
+                    <button type="button" id="togglePassword" class="absolute right-3 top-3 text-gray-400 hover:text-gray-600">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                  </div>
+                </div>
+                
+                <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+                  <span id="submitText">Sign In</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CREATOR SECTION -->
+    <section id="creator" class="section">
+      <div class="py-20 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Upload Your <span class="text-gradient">Masterpiece</span></h1>
+            <p class="text-xl text-gray-600">Share your creativity with the world</p>
+          </div>
+          
+          <div class="bg-white rounded-2xl shadow-xl p-8">
+            <form id="uploadForm" class="space-y-6">
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Artwork Title</label>
+                  <input type="text" id="artworkTitle" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Price (₹)</label>
+                  <input type="number" id="artworkPrice" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                </div>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                <textarea id="artworkDescription" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"></textarea>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                <select id="artworkCategory" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                  <option value="digital">Digital Art</option>
+                  <option value="traditional">Traditional</option>
+                  <option value="photography">Photography</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Upload Image</label>
+                <div id="dropZone" class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-indigo-500 transition-colors cursor-pointer">
+                  <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                  <p class="text-gray-600 mb-2">Drag and drop your image here, or click to browse</p>
+                  <input type="file" id="artworkImage" accept="image/*" class="hidden">
+                </div>
+                <div id="imagePreview" class="mt-4 hidden">
+                  <img id="previewImg" class="max-w-full h-64 object-cover rounded-lg mx-auto">
+                </div>
+              </div>
+              
+              <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+                Upload Artwork
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRENDING SECTION -->
+    <section id="trending" class="section">
+      <div class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Trending <span class="text-gradient">Now</span></h1>
+            <p class="text-xl text-gray-600">Most popular artworks this week</p>
+          </div>
+          
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+              <img src="https://img.freepik.com/free-photo/abstract-autumn-beauty-multi-colored-leaf-vein-pattern-generated-by-ai_188544-9871.jpg" class="w-full h-64 object-cover">
+              <div class="p-6">
+                <h3 class="text-xl font-bold mb-2">Autumn Patterns</h3>
+                <p class="text-gray-600 mb-4">Nature's abstract beauty captured in stunning detail</p>
+                <div class="flex justify-between items-center">
+                  <span class="text-2xl font-bold text-indigo-600">₹4,200</span>
+                  <span class="text-sm text-gray-500">🔥 Trending</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+              <img src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg" class="w-full h-64 object-cover">
+              <div class="p-6">
+                <h3 class="text-xl font-bold mb-2">Mountain Serenity</h3>
+                <p class="text-gray-600 mb-4">Peaceful landscape painting with mountain reflections</p>
+                <div class="flex justify-between items-center">
+                  <span class="text-2xl font-bold text-indigo-600">₹5,800</span>
+                  <span class="text-sm text-gray-500">🔥 Trending</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+              <img src="https://img.freepik.com/free-photo/colorful-design-with-spiral-design_188544-9588.jpg" class="w-full h-64 object-cover">
+              <div class="p-6">
+                <h3 class="text-xl font-bold mb-2">Spiral Dreams</h3>
+                <p class="text-gray-600 mb-4">Hypnotic digital art with vibrant color spirals</p>
+                <div class="flex justify-between items-center">
+                  <span class="text-2xl font-bold text-indigo-600">₹3,400</span>
+                  <span class="text-sm text-gray-500">🔥 Trending</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAYMENT SECTION -->
+    <section id="payment" class="section">
+      <div class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Complete Your <span class="text-gradient">Purchase</span></h1>
+            <p class="text-gray-600">Secure checkout for your selected artwork</p>
+          </div>
+          
+          <div class="grid lg:grid-cols-2 gap-8">
+            <!-- Payment Form -->
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+              <h2 class="text-2xl font-bold text-gray-900 mb-6">Payment Details</h2>
+              
+              <form id="paymentForm" class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                    <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                    <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                  </div>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                  <input type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Card Number</label>
+                  <input type="text" placeholder="1234 5678 9012 3456" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Expiry Date</label>
+                    <input type="text" placeholder="MM/YY" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">CVV</label>
+                    <input type="text" placeholder="123" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                  </div>
+                </div>
+                
+                <button type="submit" class="w-full bg-indigo-600 text-white py-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+                  Complete Payment
+                </button>
+              </form>
+            </div>
+            
+            <!-- Order Summary -->
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+              <h2 class="text-2xl font-bold text-gray-900 mb-6">Order Summary</h2>
+              
+              <div class="space-y-4">
+                <div class="flex items-center space-x-4">
+                  <img id="paymentArtImage" src="https://wallpapers.com/images/featured/berlin-money-heist-kvj75f712dxdsdy1.jpg" class="w-20 h-20 object-cover rounded-lg">
+                  <div>
+                    <h3 id="paymentArtTitle" class="font-semibold text-gray-900">BERLIN (Demo)</h3>
+                    <p class="text-sm text-gray-600">Demo Artwork</p>
+                    <p id="paymentArtPrice" class="text-lg font-bold text-indigo-600">₹8,000</p>
+                  </div>
+                </div>
+                
+                <div class="border-t pt-4 space-y-2">
+                  <div class="flex justify-between">
+                    <span>Subtotal</span>
+                    <span id="subtotal">₹8,000</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Platform Fee</span>
+                    <span>₹50</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>GST (18%)</span>
+                    <span id="gst">₹1,449</span>
+                  </div>
+                  <div class="flex justify-between text-xl font-bold border-t pt-2">
+                    <span>Total</span>
+                    <span id="total">₹9,499</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div>
+          <div class="text-2xl font-bold text-gradient mb-4">Artify</div>
+          <p class="text-gray-400 mb-4">Where creativity lives and thrives. Join our community of artists and art lovers.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white" data-section="home">Home</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white" data-section="artworks">Artworks</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white" data-section="creator">Upload</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white" data-section="trending">Trending</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Support</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white">Help Center</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Community Guidelines</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Contact</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li><i class="fas fa-envelope mr-2"></i>contact@artify.com</li>
+            <li><i class="fas fa-phone mr-2"></i>Community Support</li>
+            <li><i class="fas fa-map-marker-alt mr-2"></i>Worldwide</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm">© 2024 Artify. All rights reserved.</p>
+        <div class="flex space-x-6 mt-4 md:mt-0">
+          <a href="#" class="text-gray-400 hover:text-white text-sm">Terms</a>
+          <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy</a>
+          <a href="#" class="text-gray-400 hover:text-white text-sm">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // Initialize AOS
+    AOS.init({
+      duration: 1000,
+      once: true
+    });
+
+    // Global state
+    let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    let currentSection = 'home';
+
+    // Demo artworks data
+    const artworks = [
+      {
+        title: "BERLIN",
+        price: "8000.00",
+        category: "digital",
+        image: "https://wallpapers.com/images/featured/berlin-money-heist-kvj75f712dxdsdy1.jpg",
+        artist: "Demo Artist",
+        rating: 4.8,
+        sales: 12,
+        isDemo: true
+      },
+      {
+        title: "Black Swan",
+        price: "2500.00",
+        category: "traditional",
+        image: "https://img.freepik.com/free-photo/black-swan-cygnus-atratus-illustrated-by-elizabeth-gould_53876-65218.jpg",
+        artist: "Demo Artist",
+        rating: 4.9,
+        sales: 8,
+        isDemo: true
+      },
+      {
+        title: "Warli Heritage",
+        price: "3200.00",
+        category: "traditional",
+        image: "https://img.freepik.com/premium-vector/warli-art-tranquil-rural-life-scene-indian-tribal-art-village-lifestyle-traditional-wall-decor_770404-218.jpg",
+        artist: "Demo Artist",
+        rating: 4.7,
+        sales: 15,
+        isDemo: true
+      },
+      {
+        title: "Ancient Wonders",
+        price: "4800.00",
+        category: "digital",
+        image: "https://img.freepik.com/free-photo/view-ancient-egyptian-civilization-culture_23-2151735517.jpg",
+        artist: "Demo Artist",
+        rating: 4.6,
+        sales: 22,
+        isDemo: true
+      },
+      {
+        title: "Golden Gate Dreams",
+        price: "3600.00",
+        category: "digital",
+        image: "https://img.freepik.com/free-vector/san-francisco-bridge-concept-illustration_114360-9882.jpg",
+        artist: "Demo Artist",
+        rating: 4.8,
+        sales: 18,
+        isDemo: true
+      }
+    ];
+
+    // DOM Elements
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.section');
+    const cartBtn = document.getElementById('cartBtn');
+    const cartCount = document.getElementById('cartCount');
+    const userBtn = document.getElementById('userBtn');
+    const userDropdown = document.getElementById('userDropdown');
+    const userDisplay = document.getElementById('userDisplay');
+    const userMenu = document.getElementById('userMenu');
+    const guestMenu = document.getElementById('guestMenu');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    // Initialize app
+    document.addEventListener('DOMContentLoaded', function() {
+      updateUserInterface();
+      updateCartCount();
+      renderArtworks();
+      initializeEventListeners();
+    });
+
+    // Navigation
+    function showSection(sectionId) {
+      sections.forEach(section => {
+        section.classList.remove('active');
+        if (section.id === sectionId) {
+          section.classList.add('active');
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('data-section') === sectionId) {
+          link.classList.add('active');
+        }
+      });
+      
+      currentSection = sectionId;
+      window.scrollTo(0, 0);
+    }
+
+    // Event listeners
+    function initializeEventListeners() {
+      // Navigation links
+      document.addEventListener('click', function(e) {
+        const sectionLink = e.target.closest('[data-section]');
+        if (sectionLink) {
+          e.preventDefault();
+          const section = sectionLink.getAttribute('data-section');
+          showSection(section);
+        }
+      });
+
+      // Cart functionality
+      document.addEventListener('click', function(e) {
+        if (e.target.closest('.add-to-cart-btn')) {
+          e.preventDefault();
+          const btn = e.target.closest('.add-to-cart-btn');
+          const artwork = {
+            title: btn.getAttribute('data-title'),
+            image: btn.getAttribute('data-image'),
+            price: btn.getAttribute('data-price')
+          };
+          cart.push(artwork);
+          localStorage.setItem('cart', JSON.stringify(cart));
+          updateCartCount();
+          showNotification('Added to cart!', 'success');
+        }
+      });
+
+      // Cart button
+      if (cartBtn) {
+        cartBtn.addEventListener('click', showCartModal);
+      }
+
+      // User dropdown
+      if (userBtn) {
+        userBtn.addEventListener('click', function() {
+          userDropdown.classList.toggle('hidden');
+        });
+      }
+
+      // Mobile menu
+      if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', function() {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+
+      // Auth form
+      const authForm = document.getElementById('authForm');
+      if (authForm) {
+        authForm.addEventListener('submit', handleAuth);
+      }
+
+      // Auth tabs
+      const loginTab = document.getElementById('loginTab');
+      const signupTab = document.getElementById('signupTab');
+      if (loginTab && signupTab) {
+        loginTab.addEventListener('click', () => switchAuthTab('login'));
+        signupTab.addEventListener('click', () => switchAuthTab('signup'));
+      }
+
+      // Upload form
+      const uploadForm = document.getElementById('uploadForm');
+      if (uploadForm) {
+        uploadForm.addEventListener('submit', handleUpload);
+      }
+
+      // Payment form
+      const paymentForm = document.getElementById('paymentForm');
+      if (paymentForm) {
+        paymentForm.addEventListener('submit', handlePayment);
+      }
+
+      // Filter buttons
+      document.addEventListener('click', function(e) {
+        if (e.target.closest('.filter-btn')) {
+          const btn = e.target.closest('.filter-btn');
+          const filter = btn.getAttribute('data-filter');
+          handleFilter(filter, btn);
+        }
+      });
+
+      // Close dropdowns when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('#userBtn') && !e.target.closest('#userDropdown')) {
+          userDropdown.classList.add('hidden');
+        }
+        if (!e.target.closest('#mobileMenuBtn') && !e.target.closest('#mobileMenu')) {
+          mobileMenu.classList.add('hidden');
+        }
+      });
+    }
+
+    // Update user interface
+    function updateUserInterface() {
+      if (currentUser) {
+        userDisplay.textContent = currentUser.name;
+        userMenu.classList.remove('hidden');
+        guestMenu.classList.add('hidden');
+      } else {
+        userDisplay.textContent = 'Sign In';
+        userMenu.classList.add('hidden');
+        guestMenu.classList.remove('hidden');
+      }
+    }
+
+    // Update cart count
+    function updateCartCount() {
+      const count = cart.length;
+      cartCount.textContent = count;
+      if (count > 0) {
+        cartCount.classList.remove('hidden');
+      } else {
+        cartCount.classList.add('hidden');
+      }
+    }
+
+    // Show cart modal
+    function showCartModal() {
+      if (cart.length === 0) {
+        showNotification('Your cart is empty!', 'info');
+        return;
+      }
+
+      const modal = document.createElement('div');
+      modal.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4';
+      modal.innerHTML = `
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-96 overflow-y-auto">
+          <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+            <h2 class="text-2xl font-bold text-gray-900">Shopping Cart (${cart.length})</h2>
+            <button class="close-modal text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+          </div>
+          <div class="p-6">
+            ${cart.map((item, index) => `
+              <div class="flex items-center space-x-4 mb-4 pb-4 border-b border-gray-100">
+                <img src="${item.image}" alt="${item.title}" class="w-16 h-16 object-cover rounded-lg">
+                <div class="flex-1">
+                  <h3 class="font-semibold text-gray-900">${item.title}</h3>
+                  <p class="text-indigo-600 font-bold">₹${parseFloat(item.price).toLocaleString()}</p>
+                </div>
+                <button class="remove-item text-red-500 hover:text-red-700" data-index="${index}">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            `).join('')}
+            <div class="mt-6 pt-4 border-t border-gray-200">
+              <div class="flex justify-between items-center mb-4">
+                <span class="text-lg font-bold">Total: ₹${cart.reduce((sum, item) => sum + parseFloat(item.price), 0).toLocaleString()}</span>
+              </div>
+              <div class="flex space-x-3">
+                <button class="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold hover:bg-gray-300 transition clear-cart">
+                  Clear Cart
+                </button>
+                <button class="flex-1 bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition checkout-btn">
+                  Checkout
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(modal);
+
+      // Modal event listeners
+      modal.querySelector('.close-modal').addEventListener('click', () => {
+        document.body.removeChild(modal);
+      });
+
+      modal.querySelector('.clear-cart').addEventListener('click', () => {
+        cart.length = 0;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        document.body.removeChild(modal);
+        showNotification('Cart cleared!', 'info');
+      });
+
+      modal.querySelector('.checkout-btn').addEventListener('click', () => {
+        document.body.removeChild(modal);
+        showSection('payment');
+      });
+
+      modal.querySelectorAll('.remove-item').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const index = parseInt(e.currentTarget.getAttribute('data-index'));
+          cart.splice(index, 1);
+          localStorage.setItem('cart', JSON.stringify(cart));
+          updateCartCount();
+          document.body.removeChild(modal);
+          showNotification('Item removed!', 'info');
+        });
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          document.body.removeChild(modal);
+        }
+      });
+    }
+
+    // Render artworks
+    function renderArtworks() {
+      const grid = document.getElementById('artworksGrid');
+      if (!grid) return;
+      
+      grid.innerHTML = artworks.map(artwork => `
+        <div class="artwork-card bg-white rounded-2xl shadow-lg overflow-hidden" data-category="${artwork.category}">
+          <div class="relative overflow-hidden group">
+            <img class="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                 src="${artwork.image}" alt="${artwork.title}">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <button class="p-2 bg-white/90 rounded-full text-red-500 hover:text-red-600 transition-colors">
+                <i class="fas fa-heart"></i>
+              </button>
+            </div>
+            <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <span class="px-3 py-1 ${artwork.isDemo ? 'bg-orange-600' : 'bg-indigo-600'} text-white text-xs font-medium rounded-full capitalize">
+                ${artwork.isDemo ? 'DEMO' : artwork.category}
+              </span>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold text-gray-900">${artwork.title}</h3>
+              <div class="text-right">
+                <div class="text-yellow-400 text-sm">
+                  ${'★'.repeat(Math.floor(artwork.rating))} ${artwork.rating}
+                </div>
+                <div class="text-xs text-gray-500">${artwork.sales} sales</div>
+              </div>
+            </div>
+            <p class="text-gray-600 text-sm mb-4">By ${artwork.artist}</p>
+            <div class="flex justify-between items-center">
+              <span class="text-xl font-bold text-indigo-600">₹${parseFloat(artwork.price).toLocaleString()}</span>
+              <div class="flex space-x-2">
+                <button class="add-to-cart-btn px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
+                        data-title="${artwork.title}" data-image="${artwork.image}" data-price="${artwork.price}">
+                  <i class="fas fa-shopping-cart mr-1"></i>
+                  Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Handle filter
+    function handleFilter(filter, btn) {
+      // Update active button
+      document.querySelectorAll('.filter-btn').forEach(b => {
+        b.classList.remove('bg-indigo-600', 'text-white');
+        b.classList.add('bg-gray-200', 'text-gray-700');
+      });
+      btn.classList.add('bg-indigo-600', 'text-white');
+      btn.classList.remove('bg-gray-200', 'text-gray-700');
+      
+      // Filter artworks
+      document.querySelectorAll('.artwork-card').forEach(card => {
+        const category = card.getAttribute('data-category');
+        if (filter === 'all' || category === filter) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Auth functions
+    function switchAuthTab(mode) {
+      const loginTab = document.getElementById('loginTab');
+      const signupTab = document.getElementById('signupTab');
+      const signupFields = document.getElementById('signupFields');
+      const submitText = document.getElementById('submitText');
+      
+      if (mode === 'login') {
+        loginTab.classList.add('text-indigo-600', 'border-indigo-600');
+        loginTab.classList.remove('text-gray-400', 'border-transparent');
+        signupTab.classList.remove('text-indigo-600', 'border-indigo-600');
+        signupTab.classList.add('text-gray-400', 'border-transparent');
+        signupFields.classList.add('hidden');
+        submitText.textContent = 'Sign In';
+      } else {
+        signupTab.classList.add('text-indigo-600', 'border-indigo-600');
+        signupTab.classList.remove('text-gray-400', 'border-transparent');
+        loginTab.classList.remove('text-indigo-600', 'border-indigo-600');
+        loginTab.classList.add('text-gray-400', 'border-transparent');
+        signupFields.classList.remove('hidden');
+        submitText.textContent = 'Sign Up';
+      }
+    }
+
+    function handleAuth(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const fullName = document.getElementById('fullName')?.value;
+      const isSignup = !document.getElementById('signupFields').classList.contains('hidden');
+      
+      if (isSignup) {
+        // Signup
+        const user = { name: fullName, email: email };
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        currentUser = user;
+        showNotification('Account created successfully!', 'success');
+      } else {
+        // Login
+        const user = { name: email.split('@')[0], email: email };
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        currentUser = user;
+        showNotification('Signed in successfully!', 'success');
+      }
+      
+      updateUserInterface();
+      showSection('home');
+    }
+
+    function handleUpload(e) {
+      e.preventDefault();
+      showNotification('Artwork uploaded successfully!', 'success');
+      document.getElementById('uploadForm').reset();
+    }
+
+    function handlePayment(e) {
+      e.preventDefault();
+      showNotification('Payment processed successfully!', 'success');
+      cart.length = 0;
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartCount();
+      showSection('home');
+    }
+
+    // Notification system
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      const bgColor = type === 'error' ? 'bg-red-500' : type === 'success' ? 'bg-green-500' : 'bg-blue-500';
+      
+      notification.className = `fixed top-24 right-4 ${bgColor} text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform`;
+      notification.textContent = message;
+      
+      document.body.appendChild(notification);
+      
+      // Slide in
+      setTimeout(() => {
+        notification.classList.remove('translate-x-full');
+      }, 100);
+      
+      // Slide out and remove
+      setTimeout(() => {
+        notification.classList.add('translate-x-full');
+        setTimeout(() => {
+          document.body.removeChild(notification);
+        }, 300);
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
