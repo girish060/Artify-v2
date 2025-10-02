@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trending - Artify</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      animation: fadeIn 1s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-700">
+  <header class="bg-white shadow text-gray-600 body-font">
+    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+      <nav class="flex lg:w-2/5 flex-wrap items-center text-base md:ml-auto">
+        <a href="index.html" class="mr-5 hover:text-gray-900 transition duration-200">Home</a>
+      </nav>
+      <a class="flex order-first lg:order-none lg:w-1/5 title-font font-bold items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">
+        <img src="https://pictures.artify.tn/app/artify_logo_xs.png" alt="Artify Logo" class="w-10 h-10 rounded-full">
+        <span class="ml-3 text-2xl">Artify</span>
+      </a>
+      <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0"></div>
+    </div>
+  </header>
+
+  <section class="text-gray-700 body-font">
+    <div class="container px-5 py-24 mx-auto">
+      <div class="flex flex-col text-center w-full mb-20">
+        <h1 class="sm:text-4xl text-3xl font-bold title-font mb-4 text-gray-900">TRENDING ARTWORKS</h1>
+        <p class="lg:w-2/3 mx-auto leading-relaxed text-lg text-gray-600">These are some of the most viewed and best performing pieces of art this month.</p>
+      </div>
+
+      <div class="flex flex-wrap -m-4">
+        <!-- Artwork 1 -->
+        <div class="lg:w-1/3 sm:w-1/2 p-4 transition transform hover:-translate-y-1 duration-300">
+          <div class="relative w-full h-80">
+            <img class="absolute inset-0 w-full h-full object-cover object-center" src="https://themedium.ca/wp-content/uploads/2022/11/digital-art-.png" alt="Landscape">
+            <div class="px-8 py-10 relative z-10 w-full h-full border-4 border-white bg-white opacity-0 hover:opacity-100 transition duration-300 flex flex-col justify-center">
+              <h2 class="tracking-widest text-sm font-medium text-indigo-500 mb-1">ARTIFY</h2>
+              <h1 class="text-lg font-semibold text-gray-900 mb-3">Landscape</h1>
+              <p class="leading-relaxed">A beautiful landscape by Girish.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Artwork 2 -->
+        <div class="lg:w-1/3 sm:w-1/2 p-4 transition transform hover:-translate-y-1 duration-300">
+          <div class="relative w-full h-80">
+            <img class="absolute inset-0 w-full h-full object-cover object-center" src="https://c4.wallpaperflare.com/wallpaper/934/667/773/digital-digital-art-artwork-drawing-digital-painting-hd-wallpaper-preview.jpg" alt="Japanese Katana">
+            <div class="px-8 py-10 relative z-10 w-full h-full border-4 border-white bg-white opacity-0 hover:opacity-100 transition duration-300 flex flex-col justify-center">
+              <h2 class="tracking-widest text-sm font-medium text-indigo-500 mb-1">ARTIFY</h2>
+              <h1 class="text-lg font-semibold text-gray-900 mb-3">Japanese Katana</h1>
+              <p class="leading-relaxed">A lady holding a katana by Ajay Khot.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Artwork 3 -->
+        <div class="lg:w-1/3 sm:w-1/2 p-4 transition transform hover:-translate-y-1 duration-300">
+          <div class="relative w-full h-80">
+            <img class="absolute inset-0 w-full h-full object-cover object-center" src="https://rukminim2.flixcart.com/image/850/1000/l0e6kcw0/poster/o/3/w/medium-digital-painting-wall-hd-wallpaper-art-paper-fantasy-original-imagc6xwjkztywzb.jpeg?q=90&crop=false" alt="The Beauty By the Tree">
+            <div class="px-8 py-10 relative z-10 w-full h-full border-4 border-white bg-white opacity-0 hover:opacity-100 transition duration-300 flex flex-col justify-center">
+              <h2 class="tracking-widest text-sm font-medium text-indigo-500 mb-1">ARTIFY</h2>
+              <h1 class="text-lg font-semibold text-gray-900 mb-3">The Beauty By the Tree</h1>
+              <p class="leading-relaxed">A lady expressing her emotions by Adarsh Singh.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Artwork 4 -->
+        <div class="lg:w-1/3 sm:w-1/2 p-4 transition transform hover:-translate-y-1 duration-300">
+          <div class="relative w-full h-80">
+            <img class="absolute inset-0 w-full h-full object-cover object-center" src="https://cdnb.artstation.com/p/assets/images/images/027/161/593/large/ma-brushes-michael-adamidis-art-channel-scenery-digital-art-painting-digital-oil-painting-by-michael-adamidis-oil-texture-brush-german-landscape-2.jpg?1590757693" alt="Dawn of Sunlight">
+            <div class="px-8 py-10 relative z-10 w-full h-full border-4 border-white bg-white opacity-0 hover:opacity-100 transition duration-300 flex flex-col justify-center">
+              <h2 class="tracking-widest text-sm font-medium text-indigo-500 mb-1">ARTIFY</h2>
+              <h1 class="text-lg font-semibold text-gray-900 mb-3">Dawn of Sunlight</h1>
+              <p class="leading-relaxed">A landscape depicting new beginnings by Naresh.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Artwork 5 -->
+        <div class="lg:w-1/3 sm:w-1/2 p-4 transition transform hover:-translate-y-1 duration-300">
+          <div class="relative w-full h-80">
+            <img class="absolute inset-0 w-full h-full object-cover object-center" src="https://wallpapercave.com/wp/wp8791936.jpg" alt="Last Day">
+            <div class="px-8 py-10 relative z-10 w-full h-full border-4 border-white bg-white opacity-0 hover:opacity-100 transition duration-300 flex flex-col justify-center">
+              <h2 class="tracking-widest text-sm font-medium text-indigo-500 mb-1">ARTIFY</h2>
+              <h1 class="text-lg font-semibold text-gray-900 mb-3">Last Day</h1>
+              <p class="leading-relaxed">Attack on Titan landscape with Eren Yeager and Mikasa by Darshan.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Artwork 6 -->
+        <div class="lg:w-1/3 sm:w-1/2 p-4 transition transform hover:-translate-y-1 duration-300">
+          <div class="relative w-full h-80">
+            <img class="absolute inset-0 w-full h-full object-cover object-center" src="https://s.yimg.com/ny/api/res/1.2/qZkkali9__aNBHFZPPe5Mg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyNDI7aD02NjA-/https://media.zenfs.com/en/nextshark_articles_509/fe7233853e539cbaac45204022fc342e" alt="Sung Jin Woo">
+            <div class="px-8 py-10 relative z-10 w-full h-full border-4 border-white bg-white opacity-0 hover:opacity-100 transition duration-300 flex flex-col justify-center">
+              <h2 class="tracking-widest text-sm font-medium text-indigo-500 mb-1">ARTIFY</h2>
+              <h1 class="text-lg font-semibold text-gray-900 mb-3">Sung Jin Woo</h1>
+              <p class="leading-relaxed">The new beginning of the new character by Sun Chin Nalu.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</body>
+</html>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment - Artify</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .text-gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .navbar-backdrop {
+      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.95);
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50">
+  <!-- Enhanced Header -->
+  <header class="navbar-backdrop border-b border-gray-200 fixed w-full top-0 z-50">
+    <div class="container mx-auto flex flex-wrap p-4 flex-col md:flex-row items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="flex title-font font-bold items-center text-gray-900 mb-4 md:mb-0 group">
+        <img src="https://pictures.artify.tn/app/artify_logo_xs.png" alt="Artify Logo" class="w-10 h-10 rounded-full transition-transform group-hover:scale-110">
+        <span class="ml-3 text-2xl text-gradient">Artify</span>
+      </a>
+      
+      <!-- Navigation -->
+      <nav class="flex items-center space-x-6">
+        <a href="index.html" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors flex items-center">
+          <i class="fas fa-home mr-2"></i>
+          Home
+        </a>
+        <a href="artworks.html" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors flex items-center">
+          <i class="fas fa-palette mr-2"></i>
+          Artworks
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="bg-white border-b border-gray-200 pt-20">
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex items-center justify-center space-x-4">
+        <div class="flex items-center">
+          <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-white text-sm font-medium">1</div>
+          <span class="ml-2 text-sm font-medium text-gray-900">Cart</span>
+        </div>
+        <div class="flex-1 h-px bg-indigo-600 max-w-16"></div>
+        <div class="flex items-center">
+          <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-white text-sm font-medium">2</div>
+          <span class="ml-2 text-sm font-medium text-gray-900">Payment</span>
+        </div>
+        <div class="flex-1 h-px bg-gray-300 max-w-16"></div>
+        <div class="flex items-center">
+          <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 text-sm font-medium">3</div>
+          <span class="ml-2 text-sm font-medium text-gray-500">Confirmation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+      <!-- Page Header -->
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-bold text-gray-900 mb-2">Complete Your Purchase</h1>
+        <p class="text-gray-600">Secure checkout powered by industry-leading encryption</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Payment Form -->
+        <div>
+          <div class="bg-white rounded-2xl shadow-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+              <i class="fas fa-credit-card mr-3 text-indigo-600"></i>
+              Payment Information
+            </h2>
+
+            <form id="payment-form">
+              <!-- Contact Information -->
+              <div class="mb-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Contact Information</h3>
+                <div class="grid grid-cols-1 gap-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                    <input type="text" id="full-name" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                           placeholder="John Doe">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                    <input type="email" id="email" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                           placeholder="john@example.com">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Payment Method -->
+              <div class="mb-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Payment Method</h3>
+                <div class="space-y-3">
+                  <label class="flex items-center p-4 border-2 border-indigo-500 bg-indigo-50 rounded-lg cursor-pointer">
+                    <input type="radio" name="payment-method" value="card" class="mr-3" checked>
+                    <i class="fas fa-credit-card text-indigo-600 mr-3"></i>
+                    <span class="font-medium">Credit Card</span>
+                  </label>
+                  <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-indigo-300">
+                    <input type="radio" name="payment-method" value="upi" class="mr-3">
+                    <i class="fas fa-mobile-alt text-indigo-600 mr-3"></i>
+                    <span class="font-medium">UPI Payment</span>
+                  </label>
+                  <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-indigo-300">
+                    <input type="radio" name="payment-method" value="paypal" class="mr-3">
+                    <i class="fab fa-paypal text-indigo-600 mr-3"></i>
+                    <span class="font-medium">PayPal</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Card Details -->
+              <div id="card-details" class="mb-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Card Details</h3>
+                <div class="space-y-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Card Number *</label>
+                    <input type="text" id="card-number" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                           placeholder="1234 5678 9012 3456">
+                  </div>
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2">Expiry *</label>
+                      <input type="text" id="expiry-date" required
+                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                             placeholder="MM/YY">
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2">CVV *</label>
+                      <input type="text" id="cvv" required
+                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                             placeholder="123">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Security -->
+          <div class="bg-green-50 border border-green-200 rounded-lg p-4 mt-6">
+            <div class="flex items-center">
+              <i class="fas fa-shield-alt text-green-600 mr-3"></i>
+              <div>
+                <h4 class="font-medium text-green-900">Your payment is secured</h4>
+                <p class="text-sm text-green-700">Protected by 256-bit SSL encryption.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Summary -->
+      <div>
+          <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+            <h2 class="text-xl font-bold text-gray-900 mb-6">Order Summary</h2>
+            
+            <!-- Artwork -->
+            <div class="mb-6">
+              <div class="flex space-x-4">
+                <div id="art-image-container" class="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center">
+                  <i class="fas fa-image text-gray-400"></i>
+                </div>
+                <img id="art-image" class="w-20 h-20 object-cover rounded-lg hidden" alt="Art Image">
+                <div class="flex-1">
+                  <h3 id="art-title" class="font-semibold text-gray-900 mb-1">BERLIN (Demo)</h3>
+                  <p class="text-sm text-gray-600 mb-2">Demo Artwork</p>
+                  <p id="art-price" class="text-lg font-bold text-indigo-600" data-price="8000">₹8,000.00</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Price Breakdown -->
+            <div class="border-t border-gray-200 pt-4 mb-6">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-gray-600">Subtotal</span>
+                <span id="subtotal" class="font-semibold">₹0.00</span>
+              </div>
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-gray-600">Platform Fee</span>
+                <span id="platform-fee" class="font-semibold">₹0.00</span>
+              </div>
+              <div class="flex justify-between items-center mb-4">
+                <span class="text-gray-600">GST (18%)</span>
+                <span id="gst" class="font-semibold">₹0.00</span>
+              </div>
+              <div class="border-t border-gray-200 pt-4">
+                <div class="flex justify-between items-center">
+                  <span class="text-lg font-bold text-gray-900">Total</span>
+                  <span id="total-amount" class="text-xl font-bold text-indigo-600">₹0.00</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Discount -->
+            <div class="mb-6">
+              <div class="flex space-x-2">
+                <input type="text" id="discount-code" 
+                       class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                       placeholder="Discount code">
+                <button type="button" id="apply-discount"
+                        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
+                  Apply
+                </button>
+              </div>
+            </div>
+
+            <!-- Pay Button -->
+            <button type="submit" form="payment-form" id="pay-button"
+                    class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 rounded-lg font-bold hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all shadow-lg">
+              <i class="fas fa-lock mr-2"></i>
+              Complete Purchase
+        </button>
+
+            <!-- Trust Badges -->
+            <div class="mt-6 flex items-center justify-center space-x-4 text-gray-400">
+              <i class="fab fa-cc-visa text-2xl"></i>
+              <i class="fab fa-cc-mastercard text-2xl"></i>
+              <i class="fab fa-cc-paypal text-2xl"></i>
+              <i class="fas fa-shield-alt text-2xl"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize
+    const params = new URLSearchParams(window.location.search);
+    const title = params.get('title') || 'BERLIN (Demo)';
+    const price = params.get('price') || '8000.00';
+    const image = params.get('image') || 'https://wallpapers.com/images/featured/berlin-money-heist-kvj75f712dxdsdy1.jpg';
+
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeArtworkDetails();
+      initializeEventListeners();
+      calculateTotals();
+    });
+
+    function initializeArtworkDetails() {
+      // Always show demo artwork by default
+      document.getElementById('art-title').textContent = decodeURIComponent(title);
+      const artImage = document.getElementById('art-image');
+      const artImageContainer = document.getElementById('art-image-container');
+      
+      artImage.src = decodeURIComponent(image);
+      artImage.classList.remove('hidden');
+      artImageContainer.classList.add('hidden');
+      
+      const cleanPrice = price.replace(/[₹,]/g, '');
+      const priceElement = document.getElementById('art-price');
+      priceElement.textContent = `₹${parseFloat(cleanPrice).toLocaleString()}`;
+      priceElement.setAttribute('data-price', cleanPrice);
+    }
+
+    function initializeEventListeners() {
+      // Auto-fill user details
+      const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      if (currentUser.name) {
+        document.getElementById('full-name').value = currentUser.name;
+        document.getElementById('email').value = currentUser.email;
+      }
+
+      // Payment method selection
+      document.querySelectorAll('input[name="payment-method"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+          const cardDetails = document.getElementById('card-details');
+          cardDetails.style.display = this.value === 'card' ? 'block' : 'none';
+          
+          // Update visual selection
+          document.querySelectorAll('label').forEach(label => {
+            if (label.querySelector('input[name="payment-method"]')) {
+              if (label.contains(this)) {
+                label.classList.add('border-indigo-500', 'bg-indigo-50');
+              } else {
+                label.classList.remove('border-indigo-500', 'bg-indigo-50');
+                label.classList.add('border-gray-200');
+              }
+            }
+          });
+        });
+      });
+
+      // Form submission
+      document.getElementById('payment-form').addEventListener('submit', handleFormSubmit);
+      
+      // Discount code
+      document.getElementById('apply-discount').addEventListener('click', applyDiscount);
+
+      // Card formatting
+      document.getElementById('card-number').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+        e.target.value = value.match(/.{1,4}/g)?.join(' ') || value;
+      });
+
+      document.getElementById('expiry-date').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length >= 2) {
+          value = value.substring(0, 2) + '/' + value.substring(2, 4);
+        }
+        e.target.value = value;
+      });
+
+      document.getElementById('cvv').addEventListener('input', function(e) {
+        e.target.value = e.target.value.replace(/[^0-9]/g, '');
+      });
+    }
+
+    function calculateTotals() {
+      const basePrice = parseFloat(document.getElementById('art-price').getAttribute('data-price') || '8000');
+      const platformFee = 50;
+      const gstRate = 0.18;
+      const subtotal = basePrice;
+      const gst = Math.round((subtotal + platformFee) * gstRate);
+      const total = subtotal + platformFee + gst;
+
+      document.getElementById('subtotal').textContent = `₹${subtotal.toLocaleString()}`;
+      document.getElementById('platform-fee').textContent = `₹${platformFee.toFixed(2)}`;
+      document.getElementById('gst').textContent = `₹${gst.toLocaleString()}`;
+      document.getElementById('total-amount').textContent = `₹${total.toLocaleString()}`;
+    }
+
+    function applyDiscount() {
+      const code = document.getElementById('discount-code').value.trim().toUpperCase();
+      const validCodes = { 'FIRST10': 0.10, 'ART20': 0.20, 'WELCOME': 0.15 };
+
+      if (validCodes[code]) {
+        showNotification(`Discount applied! ${(validCodes[code] * 100)}% off`, 'success');
+        const basePrice = parseFloat(document.getElementById('art-price').getAttribute('data-price'));
+        const discountedPrice = basePrice * (1 - validCodes[code]);
+        document.getElementById('art-price').setAttribute('data-price', discountedPrice.toString());
+        calculateTotals();
+      } else if (code) {
+        showNotification('Invalid discount code', 'error');
+      }
+    }
+
+    async function handleFormSubmit(e) {
+      e.preventDefault();
+      
+      const payButton = document.getElementById('pay-button');
+      const originalText = payButton.innerHTML;
+      
+      payButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+      payButton.disabled = true;
+      
+      try {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        const purchase = {
+          id: Date.now(),
+          artwork: {
+            title: decodeURIComponent(title),
+            price: document.getElementById('total-amount').textContent,
+            image: decodeURIComponent(image)
+          },
+          purchaseDate: new Date().toISOString(),
+          status: 'completed'
+        };
+        
+        const purchases = JSON.parse(localStorage.getItem('purchases') || '[]');
+        purchases.push(purchase);
+        localStorage.setItem('purchases', JSON.stringify(purchases));
+        
+        showNotification('Payment successful! Redirecting...', 'success');
+        
+        setTimeout(() => {
+          window.location.href = 'index.html?purchase=success';
+        }, 2000);
+        
+      } catch (error) {
+        showNotification('Payment failed. Please try again.', 'error');
+        payButton.innerHTML = originalText;
+        payButton.disabled = false;
+      }
+    }
+
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      const bgColor = type === 'error' ? 'bg-red-500' : type === 'success' ? 'bg-green-500' : 'bg-blue-500';
+      
+      notification.className = `fixed top-24 right-4 ${bgColor} text-white px-6 py-4 rounded-lg shadow-lg z-50 max-w-sm`;
+      notification.innerHTML = `
+        <div class="flex items-start">
+          <i class="fas fa-check-circle mr-3 mt-0.5"></i>
+          <p class="text-sm font-medium">${message}</p>
+        </div>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        if (document.body.contains(notification)) {
+          document.body.removeChild(notification);
+        }
+      }, 4000);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In - Artify</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .text-gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero-gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    }
+    
+    .navbar-backdrop {
+      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.95);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- Enhanced Header -->
+  <header class="navbar-backdrop border-b border-gray-200">
+    <div class="container mx-auto flex flex-wrap p-4 flex-col md:flex-row items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="flex title-font font-bold items-center text-gray-900 mb-4 md:mb-0 group">
+        <img src="https://pictures.artify.tn/app/artify_logo_xs.png" alt="Artify Logo" class="w-10 h-10 rounded-full transition-transform group-hover:scale-110">
+        <span class="ml-3 text-2xl text-gradient">Artify</span>
+      </a>
+      
+      <!-- Navigation -->
+      <nav class="flex items-center space-x-6">
+        <a href="index.html" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors flex items-center">
+          <i class="fas fa-home mr-2"></i>
+          Home
+        </a>
+        <a href="artworks.html" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors flex items-center">
+          <i class="fas fa-palette mr-2"></i>
+          Artworks
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Enhanced Signup/Login Section -->
+  <div class="flex min-h-screen pt-20">
+    <!-- Left Panel -->
+    <div class="hidden lg:flex w-1/2 hero-gradient text-white flex-col justify-center items-center p-10 relative overflow-hidden">
+      <!-- Background Elements -->
+      <div class="absolute inset-0">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-purple-300/20 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div class="relative z-10 text-center">
+        <div class="mb-8">
+          <img src="https://pictures.artify.tn/app/artify_logo_xs.png" alt="Artify Logo" class="w-20 h-20 rounded-full mx-auto mb-4">
+          <h1 class="text-5xl font-bold mb-4">Welcome to Artify</h1>
+          <p class="text-xl text-center max-w-md mb-8 leading-relaxed">
+            Discover and share your creativity. Join a community of artists and visionaries from around the world.
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4 mb-8">
+          <div class="bg-white/20 backdrop-blur-md p-4 rounded-xl text-center">
+            <i class="fas fa-palette text-3xl mb-2"></i>
+            <div class="text-sm font-medium">Upload Art</div>
+          </div>
+          <div class="bg-white/20 backdrop-blur-md p-4 rounded-xl text-center">
+            <i class="fas fa-users text-3xl mb-2"></i>
+            <div class="text-sm font-medium">Connect</div>
+          </div>
+          <div class="bg-white/20 backdrop-blur-md p-4 rounded-xl text-center">
+            <i class="fas fa-heart text-3xl mb-2"></i>
+            <div class="text-sm font-medium">Secure Platform</div>
+          </div>
+          <div class="bg-white/20 backdrop-blur-md p-4 rounded-xl text-center">
+            <i class="fas fa-globe text-3xl mb-2"></i>
+            <div class="text-sm font-medium">Global Reach</div>
+          </div>
+        </div>
+        
+        <img src="https://img.freepik.com/free-photo/sight-sense-plants-collage_23-2149848106.jpg?ga=GA1.1.1537067850.1744021227&semt=ais_country_boost&w=740" alt="Artwork" class="rounded-2xl shadow-2xl w-3/4 mx-auto" />
+      </div>
+    </div>
+
+    <!-- Right Form Panel -->
+    <div class="w-full lg:w-1/2 flex flex-col justify-center items-center p-8 lg:p-12">
+      <div class="w-full max-w-md">
+        <!-- Form Header -->
+        <div class="text-center mb-8">
+          <div class="lg:hidden mb-6">
+            <img src="https://pictures.artify.tn/app/artify_logo_xs.png" alt="Artify Logo" class="w-16 h-16 rounded-full mx-auto mb-4">
+            <h1 class="text-2xl font-bold text-gradient">Artify</h1>
+          </div>
+          <h2 id="form-title" class="text-3xl font-bold text-gray-900 mb-2">Create Your Account</h2>
+          <p class="text-gray-600">Join our growing community of artists and art enthusiasts</p>
+        </div>
+
+        <!-- Social Login Options -->
+        <div class="space-y-3 mb-6">
+          <button type="button" class="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+            <i class="fab fa-google text-red-500 mr-3"></i>
+            <span class="font-medium text-gray-700">Continue with Google</span>
+          </button>
+          <button type="button" class="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+            <i class="fab fa-facebook text-blue-600 mr-3"></i>
+            <span class="font-medium text-gray-700">Continue with Facebook</span>
+          </button>
+        </div>
+
+        <!-- Divider -->
+        <div class="relative mb-6">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-gray-50 text-gray-500">Or continue with email</span>
+          </div>
+        </div>
+
+        <!-- Auth Form -->
+        <form id="auth-form" class="space-y-5">
+          <div id="name-field">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+            <div class="relative">
+              <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <input id="name" type="text" placeholder="Enter your full name" 
+                     class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" />
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+            <div class="relative">
+              <i class="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <input id="email" type="email" placeholder="Enter your email" 
+                     class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" />
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+            <div class="relative">
+              <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <input id="password" type="password" placeholder="Create a password" 
+                     class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" />
+              <button type="button" id="toggle-password" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                <i class="fas fa-eye" id="password-icon"></i>
+              </button>
+            </div>
+            <div class="text-xs text-gray-500 mt-1">
+              Must be at least 8 characters long
+            </div>
+          </div>
+
+          <!-- Terms Checkbox -->
+          <div id="terms-field" class="flex items-start">
+            <input id="terms" type="checkbox" class="mt-1 h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+            <label for="terms" class="ml-2 text-sm text-gray-700">
+              I agree to the <a href="#" class="text-indigo-600 hover:text-indigo-500">Terms of Service</a> and <a href="#" class="text-indigo-600 hover:text-indigo-500">Privacy Policy</a>
+            </label>
+          </div>
+          
+          <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all shadow-lg">
+            <span id="submit-text">Create Account</span>
+          </button>
+        </form>
+        
+        <!-- Toggle Link -->
+        <div class="text-center mt-6">
+          <p class="text-sm text-gray-600">
+            <span id="toggle-text">Already have an account?</span>
+            <a href="#" id="toggle-link" class="text-indigo-600 font-medium hover:text-indigo-500 ml-1">Sign in</a>
+          </p>
+        </div>
+
+        <!-- Success Message -->
+        <div id="success-message" class="hidden mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <div class="flex items-center">
+            <i class="fas fa-check-circle text-green-500 mr-3"></i>
+            <div>
+              <h3 class="text-sm font-medium text-green-800">Account created successfully!</h3>
+              <p class="text-sm text-green-700 mt-1">Redirecting to dashboard...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enhanced Auth Script -->
+  <script>
+    // State management
+    let isSignup = true;
+    let isLoading = false;
+
+    // DOM elements
+    const nameField = document.getElementById('name-field');
+    const termsField = document.getElementById('terms-field');
+    const formTitle = document.getElementById('form-title');
+    const submitText = document.getElementById('submit-text');
+    const toggleLink = document.getElementById('toggle-link');
+    const toggleText = document.getElementById('toggle-text');
+    const authForm = document.getElementById('auth-form');
+    const successMessage = document.getElementById('success-message');
+    const togglePasswordBtn = document.getElementById('toggle-password');
+    const passwordInput = document.getElementById('password');
+    const passwordIcon = document.getElementById('password-icon');
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeEventListeners();
+      showSignupForm();
+    });
+
+    function initializeEventListeners() {
+      // Toggle between signup/login
+      toggleLink.addEventListener('click', handleToggleMode);
+      
+      // Form submission
+      authForm.addEventListener('submit', handleFormSubmit);
+      
+      // Password visibility toggle
+      togglePasswordBtn.addEventListener('click', togglePasswordVisibility);
+      
+      // Real-time validation
+      document.getElementById('email').addEventListener('blur', validateEmail);
+      document.getElementById('password').addEventListener('input', validatePassword);
+      
+      // Social login buttons
+      document.querySelectorAll('[data-social]').forEach(btn => {
+        btn.addEventListener('click', handleSocialLogin);
+      });
+    }
+
+    function handleToggleMode(e) {
+      e.preventDefault();
+      isSignup = !isSignup;
+      
+      if (isSignup) {
+        showSignupForm();
+      } else {
+        showLoginForm();
+      }
+    }
+
+    function showSignupForm() {
+      formTitle.textContent = 'Create Your Account';
+      submitText.textContent = 'Create Account';
+      toggleText.textContent = 'Already have an account?';
+      toggleLink.textContent = 'Sign in';
+      nameField.style.display = 'block';
+      termsField.style.display = 'flex';
+      document.querySelector('p').textContent = 'Join thousands of artists and art lovers';
+    }
+
+    function showLoginForm() {
+      formTitle.textContent = 'Welcome Back';
+      submitText.textContent = 'Sign In';
+      toggleText.textContent = "Don't have an account?";
+      toggleLink.textContent = 'Sign up';
+      nameField.style.display = 'none';
+      termsField.style.display = 'none';
+      document.querySelector('p').textContent = 'Sign in to your account to continue';
+    }
+
+    function togglePasswordVisibility() {
+      const isPassword = passwordInput.type === 'password';
+      passwordInput.type = isPassword ? 'text' : 'password';
+      passwordIcon.className = isPassword ? 'fas fa-eye-slash' : 'fas fa-eye';
+    }
+
+    function validateEmail(e) {
+      const email = e.target.value;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const inputElement = e.target;
+      
+      if (email && !emailRegex.test(email)) {
+        showFieldError(inputElement, 'Please enter a valid email address');
+      } else {
+        clearFieldError(inputElement);
+      }
+    }
+
+    function validatePassword(e) {
+      const password = e.target.value;
+      const inputElement = e.target;
+      
+      if (isSignup && password.length > 0 && password.length < 8) {
+        showFieldError(inputElement, 'Password must be at least 8 characters long');
+      } else {
+        clearFieldError(inputElement);
+      }
+    }
+
+    function showFieldError(inputElement, message) {
+      clearFieldError(inputElement);
+      inputElement.classList.add('border-red-500', 'ring-red-500');
+      
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'text-red-500 text-xs mt-1 field-error';
+      errorDiv.textContent = message;
+      inputElement.parentNode.appendChild(errorDiv);
+    }
+
+    function clearFieldError(inputElement) {
+      inputElement.classList.remove('border-red-500', 'ring-red-500');
+      const existingError = inputElement.parentNode.querySelector('.field-error');
+      if (existingError) {
+        existingError.remove();
+      }
+    }
+
+    async function handleFormSubmit(e) {
+      e.preventDefault();
+      
+      if (isLoading) return;
+      
+      const formData = new FormData(authForm);
+      const name = document.getElementById('name')?.value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const terms = document.getElementById('terms')?.checked;
+
+      // Validation
+      if (isSignup) {
+        if (!name || !email || !password) {
+          showNotification("Please fill in all fields.", "error");
+          return;
+        }
+        if (!terms) {
+          showNotification("Please agree to the terms and conditions.", "error");
+          return;
+        }
+        if (password.length < 8) {
+          showNotification("Password must be at least 8 characters long.", "error");
+          return;
+        }
+      } else {
+        if (!email || !password) {
+          showNotification("Please fill in all fields.", "error");
+          return;
+        }
+      }
+
+      // Show loading state
+      setLoadingState(true);
+
+      try {
+        if (isSignup) {
+          await handleSignup(name, email, password);
+        } else {
+          await handleLogin(email, password);
+        }
+      } catch (error) {
+        showNotification(error.message, "error");
+      } finally {
+        setLoadingState(false);
+      }
+    }
+
+    async function handleSignup(name, email, password) {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+      
+      if (users[email]) {
+        throw new Error("Email already registered. Please use a different email or sign in.");
+      }
+      
+      // Create user
+      const user = {
+        name,
+        email,
+        password, // In a real app, this would be hashed
+        createdAt: new Date().toISOString(),
+        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=667eea&color=fff`
+      };
+      
+      users[email] = user;
+      localStorage.setItem('users', JSON.stringify(users));
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      
+      // Show success message
+      showSuccessMessage();
+      
+      // Redirect after delay
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 2000);
+    }
+
+    async function handleLogin(email, password) {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      const users = JSON.parse(localStorage.getItem('users') || '{}');
+      
+      if (!users[email] || users[email].password !== password) {
+        throw new Error("Invalid email or password. Please check your credentials.");
+      }
+      
+      // Set current user
+      localStorage.setItem('currentUser', JSON.stringify(users[email]));
+      
+      showNotification(`Welcome back, ${users[email].name}!`, "success");
+      
+      // Redirect after delay
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1500);
+    }
+
+    function setLoadingState(loading) {
+      isLoading = loading;
+      const submitBtn = authForm.querySelector('button[type="submit"]');
+      
+      if (loading) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+        submitBtn.classList.add('opacity-75');
+      } else {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span id="submit-text">${isSignup ? 'Create Account' : 'Sign In'}</span>`;
+        submitBtn.classList.remove('opacity-75');
+      }
+    }
+
+    function showSuccessMessage() {
+      successMessage.classList.remove('hidden');
+      authForm.style.display = 'none';
+    }
+
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      const bgColor = type === 'error' ? 'bg-red-500' : type === 'success' ? 'bg-green-500' : 'bg-blue-500';
+      const icon = type === 'error' ? 'fa-exclamation-circle' : type === 'success' ? 'fa-check-circle' : 'fa-info-circle';
+      
+      notification.className = `fixed top-20 right-4 ${bgColor} text-white px-6 py-4 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform max-w-sm`;
+      notification.innerHTML = `
+        <div class="flex items-start">
+          <i class="fas ${icon} mr-3 mt-0.5"></i>
+          <div class="flex-1">
+            <p class="text-sm font-medium">${message}</p>
+          </div>
+          <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.classList.remove('translate-x-full');
+      }, 100);
+      
+      setTimeout(() => {
+        notification.classList.add('translate-x-full');
+        setTimeout(() => {
+          if (document.body.contains(notification)) {
+            document.body.removeChild(notification);
+          }
+        }, 300);
+      }, 5000);
+    }
+
+    function handleSocialLogin(e) {
+      const provider = e.currentTarget.textContent.toLowerCase().includes('google') ? 'Google' : 'Facebook';
+      showNotification(`${provider} login will be available soon!`, 'info');
+    }
+
+    // Auto-focus first input
+    window.addEventListener('load', () => {
+      document.getElementById('name').focus();
+    });
+  </script>
+
+</body>
+</html>
+
